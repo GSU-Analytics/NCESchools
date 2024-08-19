@@ -1,0 +1,11 @@
+__pycache__/
+missing_nces_codes.csv
+.pytest_cache/
+__pycache__/
+*.py[cod]
+.env
+.vscode/
+.idea/
+*.egg-info/
+dist/
+build/

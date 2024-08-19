@@ -1,0 +1,10 @@
+name: nceshools
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - beautifulsoup4
+  - python=3.12
+  - requests
+  - pytest
+  - pandas
