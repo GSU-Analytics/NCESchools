@@ -1,12 +1,12 @@
 # NCESchools
 
-NCESchools is a Python package designed to search and extract detailed information about public and private schools from the NCES (National Center for Education Statistics) database. This package allows users to search for schools by name, city, state, and zip code, and extract various details such as enrollment, teacher-student ratios, and more.
+NCESchools is a Python package designed to search and extract detailed information about public and private schools from the NCES (National Center for Education Statistics) website. This package allows users to search for schools by name, city, state, and zip code, and extract various details such as enrollment, teacher-student ratios, and more.
 
 ## Overview
 
 The `NCESchools` package provides the following functionalities:
 - Search for public or private schools by name, location, and other parameters.
-- Extract detailed school information from the NCES database.
+- Extract detailed school information from the NCES website.
 - Handle both public and private school searches with specialized fetchers.
 
 ## Installation
