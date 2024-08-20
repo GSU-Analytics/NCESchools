@@ -1,7 +1,7 @@
-# remote_install.yaml
+# remote_install.yml
 
 # To install this environment, use the following command:
-# conda env create -f remote_install.yaml
+# conda env create -f remote_install.yml
 # After creating the environment, activate it with:
 # conda activate nceschools
 
