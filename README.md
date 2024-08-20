@@ -61,7 +61,7 @@ You can also set up the `NCEShools` environment remotely using a YAML file. This
      - python>=3.11
      - pip
      - pip:
-       - git+https://github.com/GSU-Analytics/NCEShools.git
+       - git+https://github.com/GSU-Analytics/NCESchools.git
    ```
 
 2. **Install the environment**:
@@ -71,14 +71,14 @@ You can also set up the `NCEShools` environment remotely using a YAML file. This
 
 3. **Activate the environment**:
    ```bash
-   conda activate nceshools
+   conda activate nceschools
    ```
 
-This method allows you to install the `NCEShools` package directly from the GitHub repository.
+This method allows you to install the `NCESchools` package directly from the GitHub repository.
 
 ## Usage
 
-Here’s how to use the `NCEShools` package to search and extract details for a public and a private school.
+Here’s how to use the `NCESchools` package to search and extract details for a public and a private school.
 
 ```python
 from nceschools import SchoolSearcher, PublicSchoolFetcher, PrivateSchoolFetcher

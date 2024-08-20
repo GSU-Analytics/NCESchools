@@ -1,4 +1,4 @@
-name: nceshools
+name: nceschools
 channels:
   - conda-forge
   - defaults

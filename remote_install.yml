@@ -3,13 +3,13 @@
 # To install this environment, use the following command:
 # conda env create -f remote_install.yaml
 # After creating the environment, activate it with:
-# conda activate nceshools
+# conda activate nceschools
 
-name: nceshools
+name: nceschools
 channels:
   - defaults
 dependencies:
   - python>=3.11
   - pip
   - pip:
-    - git+https://github.com/GSU-Analytics/NCEShools.git
+    - git+https://github.com/GSU-Analytics/NCESchools.git
