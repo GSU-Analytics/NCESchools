@@ -95,6 +95,11 @@ class PrivateSchoolFetcher(NCESFetcher):
         try:
             school_type = self.extract_school_type(soup)
             physical_address = self.extract_physical_address(soup)
+            street_address = self.extract_street_address(soup)
+            city = self.extract_city(soup)
+            state = self.extract_state(soup)
+            zip_body = self.extract_zip_body(soup)
+            zip_suffix = self.extract_zip_suffix(soup)
             county = self.extract_county(soup)
             locale = self.extract_locale(soup)
             total_students = self.extract_total_students(soup)
@@ -106,6 +111,11 @@ class PrivateSchoolFetcher(NCESFetcher):
             return {
                 'Type': school_type,
                 'Physical Address': physical_address,
+                'Street Address': street_address,
+                'City': city,
+                'State': state,
+                'Zip Code Body': zip_body,
+                'Zip Code Suffix': zip_suffix,
                 'County': county,
                 'Locale': locale,
                 'Total Students': total_students,
