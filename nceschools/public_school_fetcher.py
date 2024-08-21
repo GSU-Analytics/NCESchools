@@ -98,6 +98,7 @@ class PublicSchoolFetcher(NCESFetcher):
         soup = BeautifulSoup(html_content, 'html.parser')
 
         try:
+            school_name = self.extract_school_name(soup)
             school_type = self.extract_school_type(soup)
             physical_address = self.extract_physical_address(soup)
             street_address = self.extract_street_address(soup)
@@ -116,6 +117,7 @@ class PublicSchoolFetcher(NCESFetcher):
             lunch_eligibility = self.extract_lunch_eligibility(soup)
 
             return {
+                'School Name': school_name,
                 'Type': school_type,
                 'Physical Address': physical_address,
                 'Street Address': street_address,
