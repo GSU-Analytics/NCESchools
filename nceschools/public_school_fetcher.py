@@ -154,6 +154,25 @@ class PublicSchoolFetcher(NCESFetcher):
             if type_element:
                 return type_element.text.strip()
         return None
+    
+    def extract_school_name(self, soup):
+        """
+        Extracts the school name from the title tag in the parsed HTML content for public schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The school name or None if not found.
+        """
+        title_tag = soup.find('title')
+        if title_tag:
+            # Extracting the school name from the title
+            match = re.search(r"Search for Public Schools - (.+) \(\d+\)", title_tag.get_text(strip=True))
+            if match:
+                return match.group(1)
+        return None
+
 
     def extract_physical_address(self, soup):
         """

@@ -4,6 +4,11 @@ import pytest
 from bs4 import BeautifulSoup
 from nceschools.public_school_fetcher import PublicSchoolFetcher
 
+def test_extract_school_name_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
+    assert public_school_fetcher.extract_school_name(anniston_soup) == "Anniston High School", f"Expected 'Anniston High School', got '{public_school_fetcher.extract_school_name(anniston_soup)}'"
+    assert public_school_fetcher.extract_school_name(shiloh_soup) == "Shiloh High School", f"Expected 'Shiloh High School', got '{public_school_fetcher.extract_school_name(shiloh_soup)}'"
+    assert public_school_fetcher.extract_school_name(south_haven_soup) == "South Haven High School", f"Expected 'South Haven High School', got '{public_school_fetcher.extract_school_name(south_haven_soup)}'"
+
 def test_extract_school_type_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
     assert public_school_fetcher.extract_school_type(anniston_soup) == "Regular school", f"Expected 'Regular school', got '{public_school_fetcher.extract_school_type(anniston_soup)}'"
     assert public_school_fetcher.extract_school_type(shiloh_soup) == "Regular school", f"Expected 'Regular school', got '{public_school_fetcher.extract_school_type(shiloh_soup)}'"

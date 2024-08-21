@@ -6,6 +6,7 @@ import pytest
 from bs4 import BeautifulSoup
 from os.path import abspath, dirname, join
 from nceschools.public_school_fetcher import PublicSchoolFetcher
+from nceschools.private_school_fetcher import PrivateSchoolFetcher
 
 # This assumes that the conftest.py file is located in the 'tests' directory
 current_dir = dirname(abspath(__file__))
@@ -52,3 +53,7 @@ def grace_christian_school_soup(html_dir):
 @pytest.fixture
 def public_school_fetcher():
     return PublicSchoolFetcher()
+
+@pytest.fixture
+def private_school_fetcher():
+    return PrivateSchoolFetcher()

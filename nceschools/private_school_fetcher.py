@@ -129,6 +129,24 @@ class PrivateSchoolFetcher(NCESFetcher):
             print(f"Error extracting data: {e}")
             return None
 
+    def extract_school_name(self, soup):
+        """
+        Extracts the school name from the title tag in the parsed HTML content for private schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The school name or None if not found.
+        """
+        title_tag = soup.find('title')
+        if title_tag:
+            # Extracting the school name from the title
+            match = re.search(r"School Detail for (.+)", title_tag.get_text(strip=True))
+            if match:
+                return match.group(1)
+        return None
+
     def extract_school_type(self, soup):
         """
         Extracts the school type from the parsed HTML content.
