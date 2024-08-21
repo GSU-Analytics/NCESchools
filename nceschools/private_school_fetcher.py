@@ -15,6 +15,11 @@ Methods:
     extract_school_details(html_content): Extracts private school details from the HTML content.
     extract_school_type(soup): Extracts the school type from the parsed HTML content.
     extract_physical_address(soup): Extracts the physical address from the parsed HTML content.
+    extract_street_address(soup): Extracts the street address from the parsed HTML content.
+    extract_city(soup): Extracts the city from the parsed HTML content.
+    extract_state(soup): Extracts the state abbreviation from the parsed HTML content.
+    extract_zip_body(soup): Extracts the zip code body (first 5 digits) from the parsed HTML content.
+    extract_zip_suffix(soup): Extracts the zip code suffix (4 digits after the dash) from the parsed HTML content.
     extract_county(soup): Extracts the county from the parsed HTML content.
     extract_locale(soup): Extracts the locale from the parsed HTML content.
     extract_total_students(soup): Extracts the total number of students from the parsed HTML content.
@@ -153,6 +158,102 @@ class PrivateSchoolFetcher(NCESFetcher):
                 if text:
                     address_lines.append(text)
             return " ".join(address_lines).replace('\xa0', ' ')
+        return None
+
+    def extract_street_address(self, soup):
+        """
+        Extracts the street address from the parsed HTML content for private schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The street address or None if not found.
+        """
+        address_tag = soup.find('strong', string="Physical Address:")
+        if address_tag:
+            address_element = str(address_tag.next_sibling.next_sibling)
+            street_address = address_element.split('<br />')[0].strip()
+            return street_address
+        return None
+
+    def extract_city(self, soup):
+        """
+        Extracts the city from the parsed HTML content for private schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The city or None if not found.
+        """
+        address_tag = soup.find('strong', string="Physical Address:")
+        if address_tag:
+            address_content = str(address_tag.next_sibling.next_sibling.next_sibling.next_sibling)
+            print(address_content)
+            city = address_content.split(',')[0].strip()
+            return city
+        return None
+
+    def extract_state(self, soup):
+        """
+        Extracts the state from the parsed HTML content for private schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The state abbreviation or None if not found.
+        """
+        address_tag = soup.find('strong', string="Physical Address:")
+        if address_tag:
+            # Get the full address content after the second <br />
+            address_content = str(address_tag.next_sibling.next_sibling.next_sibling.next_sibling)
+            # Use regex to find the two-letter state abbreviation
+            match = re.search(r',\s([A-Z]{2})\s', address_content)
+            if match:
+                return match.group(1)
+        return None
+
+
+    def extract_zip_body(self, soup):
+        """
+        Extracts the zip code body (first 5 digits) from the parsed HTML content for private schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The zip code body or None if not found.
+        """
+        address_tag = soup.find('strong', string="Physical Address:")
+        if address_tag:
+            # Get the full address content after the second <br />
+            address_content = str(address_tag.next_sibling.next_sibling.next_sibling.next_sibling)
+            # Use regex to find the first five digits of the zip code
+            match = re.search(r'\s(\d{5})', address_content)
+            if match:
+                return match.group(1)
+        return None
+
+    def extract_zip_suffix(self, soup):
+        """
+        Extracts the zip code suffix (4 digits after the dash) from the parsed HTML content for private schools.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The zip code suffix or None if not found.
+        """
+        address_tag = soup.find('strong', string="Physical Address:")
+        if address_tag:
+            # Get the full address content after the second <br />
+            address_content = str(address_tag.next_sibling.next_sibling.next_sibling.next_sibling)
+            # Use regex to find the four digits after the dash
+            match = re.search(r'-(\d{4})', address_content)
+            if match:
+                return match.group(1)
         return None
 
     def extract_county(self, soup):

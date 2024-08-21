@@ -1,3 +1,5 @@
+# test_public_school_fetcher.py
+
 import pytest
 from bs4 import BeautifulSoup
 from nceschools.public_school_fetcher import PublicSchoolFetcher
@@ -11,6 +13,31 @@ def test_extract_physical_address_public(public_school_fetcher, anniston_soup, s
     assert public_school_fetcher.extract_physical_address(anniston_soup) == "1301 Woodstock Ave Anniston, AL 36207", f"Expected '1301 Woodstock Ave Anniston, AL 36207', got '{public_school_fetcher.extract_physical_address(anniston_soup)}'"
     assert public_school_fetcher.extract_physical_address(shiloh_soup) == "4210 Shiloh Rd Snellville, GA 30039", f"Expected '4210 Shiloh Rd Snellville, GA 30039', got '{public_school_fetcher.extract_physical_address(shiloh_soup)}'"
     assert public_school_fetcher.extract_physical_address(south_haven_soup) == "600 ELKENBURG ST SOUTH HAVEN, MI 49090-1980", f"Expected '600 ELKENBURG ST SOUTH HAVEN, MI 49090-1980', got '{public_school_fetcher.extract_physical_address(south_haven_soup)}'"
+
+def test_extract_street_address_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
+    assert public_school_fetcher.extract_street_address(anniston_soup) == "1301 Woodstock Ave", f"Expected '1301 Woodstock Ave', got '{public_school_fetcher.extract_street_address(anniston_soup)}'"
+    assert public_school_fetcher.extract_street_address(shiloh_soup) == "4210 Shiloh Rd", f"Expected '4210 Shiloh Rd', got '{public_school_fetcher.extract_street_address(shiloh_soup)}'"
+    assert public_school_fetcher.extract_street_address(south_haven_soup) == "600 ELKENBURG ST", f"Expected '600 ELKENBURG ST', got '{public_school_fetcher.extract_street_address(south_haven_soup)}'"
+
+def test_extract_city_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
+    assert public_school_fetcher.extract_city(anniston_soup) == "Anniston", f"Expected 'Anniston', got '{public_school_fetcher.extract_city(anniston_soup)}'"
+    assert public_school_fetcher.extract_city(shiloh_soup) == "Snellville", f"Expected 'Snellville', got '{public_school_fetcher.extract_city(shiloh_soup)}'"
+    assert public_school_fetcher.extract_city(south_haven_soup) == "SOUTH HAVEN", f"Expected 'SOUTH HAVEN', got '{public_school_fetcher.extract_city(south_haven_soup)}'"
+
+def test_extract_state_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
+    assert public_school_fetcher.extract_state(anniston_soup) == "AL", f"Expected 'AL', got '{public_school_fetcher.extract_state(anniston_soup)}'"
+    assert public_school_fetcher.extract_state(shiloh_soup) == "GA", f"Expected 'GA', got '{public_school_fetcher.extract_state(shiloh_soup)}'"
+    assert public_school_fetcher.extract_state(south_haven_soup) == "MI", f"Expected 'MI', got '{public_school_fetcher.extract_state(south_haven_soup)}'"
+
+def test_extract_zip_body_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
+    assert public_school_fetcher.extract_zip_body(anniston_soup) == "36207", f"Expected '36207', got '{public_school_fetcher.extract_zip_body(anniston_soup)}'"
+    assert public_school_fetcher.extract_zip_body(shiloh_soup) == "30039", f"Expected '30039', got '{public_school_fetcher.extract_zip_body(shiloh_soup)}'"
+    assert public_school_fetcher.extract_zip_body(south_haven_soup) == "49090", f"Expected '49090', got '{public_school_fetcher.extract_zip_body(south_haven_soup)}'"
+
+def test_extract_zip_suffix_public(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
+    assert public_school_fetcher.extract_zip_suffix(anniston_soup) is None, f"Expected None, got '{public_school_fetcher.extract_zip_suffix(anniston_soup)}'"
+    assert public_school_fetcher.extract_zip_suffix(shiloh_soup) is None, f"Expected None, got '{public_school_fetcher.extract_zip_suffix(shiloh_soup)}'"
+    assert public_school_fetcher.extract_zip_suffix(south_haven_soup) == "1980", f"Expected '1980', got '{public_school_fetcher.extract_zip_suffix(south_haven_soup)}'"
 
 def test_extract_county(public_school_fetcher, anniston_soup, shiloh_soup, south_haven_soup):
     assert public_school_fetcher.extract_county(anniston_soup) == "Calhoun County", f"Expected 'Calhoun County', got '{public_school_fetcher.extract_county(anniston_soup)}'"

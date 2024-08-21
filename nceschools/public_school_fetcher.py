@@ -15,6 +15,11 @@ Methods:
     extract_school_details(html_content): Extracts public school details from the HTML content.
     extract_school_type(soup): Extracts the school type from the parsed HTML content.
     extract_physical_address(soup): Extracts the physical address from the parsed HTML content.
+    extract_street_address(soup): Extracts the street address from the parsed HTML content.
+    extract_city(soup): Extracts the city from the parsed HTML content.
+    extract_state(soup): Extracts the state abbreviation from the parsed HTML content.
+    extract_zip_body(soup): Extracts the zip code body (first 5 digits) from the parsed HTML content.
+    extract_zip_suffix(soup): Extracts the zip code suffix (4 digits after the dash) from the parsed HTML content.
     extract_county(soup): Extracts the county from the parsed HTML content.
     extract_locale(soup): Extracts the locale from the parsed HTML content.
     extract_total_students(soup): Extracts the total number of students from the parsed HTML content.
@@ -36,6 +41,7 @@ Examples:
     >>> school_details = fetcher.extract_school_details(html_content)
     >>> print(school_details)
 """
+
 
 import re
 from bs4 import BeautifulSoup
@@ -157,7 +163,121 @@ class PublicSchoolFetcher(NCESFetcher):
                 address = " ".join([line.strip() for line in address_lines if isinstance(line, str)])
                 return address.replace('&nbsp;', ' ').replace('\xa0', ' ')
         return None
+    
+    def extract_street_address(self, soup):
+        """
+        Extracts the street address from the parsed HTML content.
 
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The street address or None if not found.
+        """
+        address_tag = soup.find('font', string="Physical Address:")
+        if address_tag:
+            address_element = address_tag.find_next('font', size='3').find('a')
+            if address_element:
+                address_string = str(address_element)
+                start = 'Navigator">'
+                end = '<br/>'
+                street_address = address_string.split(start)[-1].split(end)[0].strip()
+                return street_address
+        return None
+
+    def extract_city(self, soup):
+        """
+        Extracts the city name from the parsed HTML content.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The city name or None if not found.
+        """
+        address_tag = soup.find('font', string="Physical Address:")
+        if address_tag:
+            address_element = address_tag.find_next('font', size='3').find('a')
+            if address_element:
+                address_string = str(address_element)
+
+                # Use regex to find the city name, which appears before the comma
+                match = re.search(r'>([^<]+),\s[A-Z]{2}\s\d{5}', address_string)
+                if match:
+                    city = match.group(1).strip()
+                    return city
+        return None
+
+    def extract_state(self, soup):
+        """
+        Extracts the state abbreviation from the parsed HTML content.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The state abbreviation or None if not found.
+        """
+        address_tag = soup.find('font', string="Physical Address:")
+        if address_tag:
+            address_element = address_tag.find_next('font', size='3').find('a')
+            if address_element:
+                address_string = str(address_element)
+                
+                # Use regex to find the two-letter state abbreviation
+                match = re.search(r',\s([A-Z]{2})\s\d{5}', address_string)
+                if match:
+                    state_abbr = match.group(1)
+                    return state_abbr
+        return None
+
+    def extract_zip_body(self, soup):
+        """
+        Extracts the 5-digit ZIP code body from the parsed HTML content.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The 5-digit ZIP code body or None if not found.
+        """
+        address_tag = soup.find('font', string="Physical Address:")
+        if address_tag:
+            address_element = address_tag.find_next('font', size='3').find('a')
+            if address_element:
+                address_string = str(address_element)
+                
+                # Use regex to find the 5-digit ZIP code body
+                match = re.search(r',\s[A-Z]{2}\s(\d{5})(?:-\d{4})?</a>', address_string)
+                if match:
+                    zip_body = match.group(1)
+                    return zip_body
+        return None
+
+    def extract_zip_suffix(self, soup):
+        """
+        Extracts the ZIP code suffix (the four digits after the dash in the ZIP+4 code)
+        from the parsed HTML content.
+
+        Args:
+            soup (BeautifulSoup): The BeautifulSoup object of the HTML content.
+
+        Returns:
+            str: The ZIP code suffix or None if not found.
+        """
+        address_tag = soup.find('font', string="Physical Address:")
+        if address_tag:
+            address_element = address_tag.find_next('font', size='3').find('a')
+            if address_element:
+                address_string = str(address_element)
+                
+                # Use regex to find the ZIP+4 suffix
+                match = re.search(r'(\d{5})-(\d{4})</a>', address_string)
+                if match:
+                    zip_suffix = match.group(2)
+                    return zip_suffix
+        return None
+    
     def extract_county(self, soup):
         """
         Extracts the county from the parsed HTML content.
