@@ -58,7 +58,7 @@ You can also set up the `NCEShools` environment remotely using a YAML file. This
    channels:
      - defaults
    dependencies:
-     - python>=3.11
+     - python>=3.10
      - pip
      - pip:
        - git+https://github.com/GSU-Analytics/NCESchools.git

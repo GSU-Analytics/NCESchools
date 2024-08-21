@@ -9,7 +9,7 @@ name: nceschools
 channels:
   - defaults
 dependencies:
-  - python>=3.11
+  - python>=3.10
   - pip
   - pip:
     - git+https://github.com/GSU-Analytics/NCESchools.git

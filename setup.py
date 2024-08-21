@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="NCEShools",
-    version="0.1.0",
+    version="0.1.1",
     author="Isaac Kerson",
     author_email="ikerson@gsu.edu",
     description="A package to search and extract school details from the NCES website.",
