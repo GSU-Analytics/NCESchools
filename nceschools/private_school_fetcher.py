@@ -220,7 +220,6 @@ class PrivateSchoolFetcher(NCESFetcher):
         address_tag = soup.find('strong', string="Physical Address:")
         if address_tag:
             address_content = str(address_tag.next_sibling.next_sibling.next_sibling.next_sibling)
-            print(address_content)
             city = address_content.split(',')[0].strip()
             return city
         return None
